@@ -521,15 +521,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent> with T
         axis: null,
         data: toWrap.key,
         ignoringFeedbackSemantics: false,
-        feedback: widget.feedBackWidgetBuilder != null ? widget.feedBackWidgetBuilder(context, index, Container(
-          alignment: Alignment.topLeft,
-          // These constraints will limit the cross axis of the drawn widget.
-          constraints: newConstraints,
-          child: Material(
-            elevation: 6.0,
-            child: toWrapWithSemantics,
-          ),
-        ),) : Container(
+        feedback: widget.feedBackWidgetBuilder != null ? widget.feedBackWidgetBuilder(context, index, toWrapWithSemantics) : Container(
           alignment: Alignment.topLeft,
           // These constraints will limit the cross axis of the drawn widget.
           constraints: newConstraints,
