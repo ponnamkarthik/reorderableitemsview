@@ -1,3 +1,9 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 24-04-2020
 
-* TODO: Describe initial release.
+* Supports Staggered GridView ordering
+* Supports GridView ordering
+* Supports ListView ordering
+
+## [0.0.1]
+
+* initial release.

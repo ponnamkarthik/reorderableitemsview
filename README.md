@@ -4,6 +4,12 @@
 
 A Flutter package for staggered grid view or ListView with ordering support
 
+## Info
+
+This plugin uses most for its code from ReorderableListView
+
+This Plugin combines the [ReorderableListView](https://api.flutter.dev/flutter/material/ReorderableListView-class.html) and [flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view) to provide Draggable behaviour for Staggered GridView
+
 ## Usage
 To use this plugin, add `reorderableitemsview` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
 
@@ -173,12 +179,6 @@ class _Example01Tile extends StatelessWidget {
   }
 }
 ```
-
-## Info
-
-This plugin uses most for it from ReorderableListView
-
-This Plugin combines the [ReorderableListView](https://api.flutter.dev/flutter/material/ReorderableListView-class.html) and [flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view) to provide Draggable behaviour for Staggered GridView
 
 ### Options
 
