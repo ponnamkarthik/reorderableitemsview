@@ -9,7 +9,7 @@ To use this plugin, add `reorderableitemsview` as a [dependency in your pubspec.
 
 ### Example Staggered GridView
 
-``` dart
+```dart
 import 'package:flutter/material.dart';
 import 'package:reorderableitemsview/reorderableitemsview.dart';
 
@@ -180,3 +180,24 @@ This plugin uses most for it from ReorderableListView
 
 This Plugin combines the [ReorderableListView](https://api.flutter.dev/flutter/material/ReorderableListView-class.html) and [flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view) to provide Draggable behaviour for Staggered GridView
 
+### Options
+
+```dart
+@required this.children, // List<Widget>
+@required this.onReorder, // Callback onReorder(int oldIndex, int newIndex)
+this.scrollController, // ScrollController
+this.scrollDirection = Axis.vertical, // Axis Ignored in GridView
+this.padding, 
+this.staggeredTiles, // Only used in GridView, check gridview example above
+this.crossAxisCount = 3, // Only used in GridView
+this.isGrid = false, // if true renders as gridview
+this.reverse = false,
+this.longPressToDrag = true,
+this.mainAxisSpacing = 0.0, // Only used in GridView
+this.crossAxisSpacing = 0.0, // Only used in GridView
+this.feedBackWidgetBuilder,
+```
+
+## Demo
+
+<img src="https://github.com/PonnamKarthik/reorderableitemsview/raw/master/demo/demo.gif" width="320px" />
