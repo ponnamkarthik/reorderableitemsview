@@ -1,6 +1,6 @@
 name: reorderableitemsview
 description:  A Flutter package for staggered grid view or ListView with ordering support
-version: 2.0.0
+version: 2.0.1
 homepage: https://github.com/PonnamKarthik/reorderableitemsview
 
 environment:
