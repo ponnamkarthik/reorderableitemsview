@@ -201,3 +201,8 @@ this.feedBackWidgetBuilder,
 ## Demo
 
 <img src="https://github.com/PonnamKarthik/reorderableitemsview/raw/master/demo/demo.gif" width="320px" />
+
+
+## Buy Me a Coffee
+
+<a href="https://www.buymeacoffee.com/karthikponnam" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
