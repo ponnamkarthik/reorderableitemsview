@@ -26,17 +26,17 @@ class GridPageView extends StatefulWidget {
 
 class _GridPageViewState extends State<GridPageView> {
 
-  List<StaggeredTileExtended> _listStaggeredTileExtended = const <StaggeredTileExtended>[
-    const StaggeredTileExtended.count(2, 2),
-    const StaggeredTileExtended.count(2, 1),
-    const StaggeredTileExtended.count(1, 2),
-    const StaggeredTileExtended.count(1, 1),
-    const StaggeredTileExtended.count(2, 2),
-    const StaggeredTileExtended.count(1, 2),
-    const StaggeredTileExtended.count(1, 1),
-    const StaggeredTileExtended.count(3, 1),
-    const StaggeredTileExtended.count(1, 1),
-    const StaggeredTileExtended.count(4, 1),
+  List<StaggeredTileExtended> _listStaggeredTileExtended = <StaggeredTileExtended>[
+    StaggeredTileExtended.count(2, 2),
+    StaggeredTileExtended.count(2, 1),
+    StaggeredTileExtended.count(1, 2),
+    StaggeredTileExtended.count(1, 1),
+    StaggeredTileExtended.count(2, 2),
+    StaggeredTileExtended.count(1, 2),
+    StaggeredTileExtended.count(1, 1),
+    StaggeredTileExtended.count(3, 1),
+    StaggeredTileExtended.count(1, 1),
+    StaggeredTileExtended.count(4, 1),
   ];
 
   List<Widget> _tiles = <Widget>[
