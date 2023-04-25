@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'list_page.dart';
+
 import 'grid_page.dart';
+import 'list_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,44 +31,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
-      body: Column(
-        children: <Widget>[
-          RaisedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ListPageView()
-                )
-              );
-            },
-            child: Text(
-              "ListView Demo"
+        appBar: AppBar(
+          title: Text(widget.title!),
+        ),
+        body: Column(
+          children: <Widget>[
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListPageView()));
+              },
+              child: Text("ListView Demo"),
             ),
-          ),
-          SizedBox(
-            height: 16.0,
-          ),
-          RaisedButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) => GridPageView()
-                  )
-              );
-            },
-            child: Text(
-                "Staggered Grid Demo"
+            SizedBox(
+              height: 16.0,
             ),
-          ),
-        ],
-      )
-    );
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => GridPageView()));
+              },
+              child: Text("Staggered Grid Demo"),
+            ),
+          ],
+        ));
   }
 }
