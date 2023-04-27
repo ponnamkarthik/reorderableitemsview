@@ -3,14 +3,12 @@ library reorderableitemsview;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 typedef ReorderCallback = void Function(int oldIndex, int newIndex);
 
-typedef IndexedFeedBackWidgetBuilder = Widget Function(
-    BuildContext context, int index, Widget child);
+typedef IndexedFeedBackWidgetBuilder = Widget Function(BuildContext context, int index, Widget child);
 
 /// A list whose items the user can interactively reorder by dragging.
 ///
@@ -39,10 +37,7 @@ class ReorderableItemsView extends StatefulWidget {
     this.mainAxisSpacing = 0.0,
     this.crossAxisSpacing = 0.0,
     this.feedBackWidgetBuilder,
-  })  : assert(scrollDirection != null),
-        assert(onReorder != null),
-        assert(children != null),
-        assert(
+  })  : assert(
           children.every((Widget w) => w.key != null),
           'All children of this widget must have a key.',
         ),
@@ -129,8 +124,7 @@ class ReorderableItemsView extends StatefulWidget {
 // insert Draggables into the Overlay above itself.
 class _ReorderableItemsViewState extends State<ReorderableItemsView> {
   // We use an inner overlay so that the dragging list item doesn't draw outside of the list itself.
-  final GlobalKey _overlayKey =
-      GlobalKey(debugLabel: '$ReorderableItemsView overlay key');
+  final GlobalKey _overlayKey = GlobalKey(debugLabel: '$ReorderableItemsView overlay key');
 
   // This entry contains the scrolling list itself.
   late OverlayEntry _listOverlayEntry;
@@ -208,8 +202,7 @@ class _ReorderableListContent extends StatefulWidget {
   _ReorderableListContentState createState() => _ReorderableListContentState();
 }
 
-class _ReorderableListContentState extends State<_ReorderableListContent>
-    with TickerProviderStateMixin<_ReorderableListContent> {
+class _ReorderableListContentState extends State<_ReorderableListContent> with TickerProviderStateMixin<_ReorderableListContent> {
   // The extent along the [widget.scrollDirection] axis to allow a child to
   // drop into when the user reorders list children.
   //
@@ -281,18 +274,14 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
   @override
   void initState() {
     super.initState();
-    _entranceController =
-        AnimationController(vsync: this, duration: _reorderAnimationDuration);
-    _ghostController =
-        AnimationController(vsync: this, duration: _reorderAnimationDuration);
+    _entranceController = AnimationController(vsync: this, duration: _reorderAnimationDuration);
+    _ghostController = AnimationController(vsync: this, duration: _reorderAnimationDuration);
     _entranceController.addStatusListener(_onEntranceStatusChanged);
   }
 
   @override
   void didChangeDependencies() {
-    _scrollController = widget.scrollController ??
-        PrimaryScrollController.of(context) ??
-        ScrollController();
+    _scrollController = widget.scrollController ?? PrimaryScrollController.of(context);
     super.didChangeDependencies();
   }
 
@@ -329,9 +318,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
   void _scrollTo(BuildContext context) {
     if (_scrolling) return;
     final RenderObject contextObject = context.findRenderObject()!;
-    final RenderAbstractViewport viewport =
-        RenderAbstractViewport.of(contextObject)!;
-    assert(viewport != null);
+    final RenderAbstractViewport viewport = RenderAbstractViewport.of(contextObject);
     // If and only if the current scroll offset falls in-between the offsets
     // necessary to reveal the selected context at the top or bottom of the
     // screen, then it is already on-screen.
@@ -345,8 +332,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
       _scrollController!.position.maxScrollExtent,
       viewport.getOffsetToReveal(contextObject, 1.0).offset + margin,
     );
-    final bool onScreen =
-        scrollOffset <= topOffset && scrollOffset >= bottomOffset;
+    final bool onScreen = scrollOffset <= topOffset && scrollOffset >= bottomOffset;
 
     // If the context is off screen, then we request a scroll to make it visible.
     if (!onScreen) {
@@ -416,8 +402,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
     // Places the value from startIndex one space before the element at endIndex.
     void reorder(int startIndex, int endIndex) {
       setState(() {
-        if (startIndex != endIndex && endIndex < widget.children.length)
-          widget.onReorder(startIndex, endIndex);
+        if (startIndex != endIndex && endIndex < widget.children.length) widget.onReorder(startIndex, endIndex);
         _ghostController.reverse(from: 0.1);
         _entranceController.reverse(from: 0.1);
         _dragging = null;
@@ -431,8 +416,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
 
     Widget wrapWithSemantics() {
       // First, determine which semantics actions apply.
-      final Map<CustomSemanticsAction, VoidCallback> semanticsActions =
-          <CustomSemanticsAction, VoidCallback>{};
+      final Map<CustomSemanticsAction, VoidCallback> semanticsActions = <CustomSemanticsAction, VoidCallback>{};
 
       // Create the appropriate semantics actions.
       void moveToStart() => reorder(index, 0);
@@ -442,36 +426,26 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
       // before index+2, which is after the space at index+1.
       void moveAfter() => reorder(index, index + 2);
 
-      final MaterialLocalizations localizations =
-          MaterialLocalizations.of(context);
+      final MaterialLocalizations localizations = MaterialLocalizations.of(context);
 
       // If the item can move to before its current position in the list.
       if (index > 0) {
-        semanticsActions[CustomSemanticsAction(
-            label: localizations.reorderItemToStart)] = moveToStart;
+        semanticsActions[CustomSemanticsAction(label: localizations.reorderItemToStart)] = moveToStart;
         String reorderItemBefore = localizations.reorderItemUp;
         if (widget.scrollDirection == Axis.horizontal) {
-          reorderItemBefore = Directionality.of(context) == TextDirection.ltr
-              ? localizations.reorderItemLeft
-              : localizations.reorderItemRight;
+          reorderItemBefore = Directionality.of(context) == TextDirection.ltr ? localizations.reorderItemLeft : localizations.reorderItemRight;
         }
-        semanticsActions[CustomSemanticsAction(label: reorderItemBefore)] =
-            moveBefore;
+        semanticsActions[CustomSemanticsAction(label: reorderItemBefore)] = moveBefore;
       }
 
       // If the item can move to after its current position in the list.
       if (index < widget.children.length - 1) {
         String reorderItemAfter = localizations.reorderItemDown;
         if (widget.scrollDirection == Axis.horizontal) {
-          reorderItemAfter = Directionality.of(context) == TextDirection.ltr
-              ? localizations.reorderItemRight
-              : localizations.reorderItemLeft;
+          reorderItemAfter = Directionality.of(context) == TextDirection.ltr ? localizations.reorderItemRight : localizations.reorderItemLeft;
         }
-        semanticsActions[CustomSemanticsAction(label: reorderItemAfter)] =
-            moveAfter;
-        semanticsActions[
-                CustomSemanticsAction(label: localizations.reorderItemToEnd)] =
-            moveToEnd;
+        semanticsActions[CustomSemanticsAction(label: reorderItemAfter)] = moveAfter;
+        semanticsActions[CustomSemanticsAction(label: localizations.reorderItemToEnd)] = moveToEnd;
       }
 
       // We pass toWrap with a GlobalKey into the Draggable so that when a list
@@ -491,8 +465,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
       );
     }
 
-    Widget buildDragTarget(BuildContext context, List<Key?> acceptedCandidates,
-        List<dynamic> rejectedCandidates) {
+    Widget buildDragTarget(BuildContext context, List<Key?> acceptedCandidates, List<dynamic> rejectedCandidates) {
       final Widget toWrapWithSemantics = wrapWithSemantics();
 
       double mainAxisExtent = 0.0;
@@ -500,17 +473,13 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
 
       BoxConstraints newConstraints = constraints;
 
-      if (widget.isGrid &&
-          _dragging == null &&
-          index < widget.staggeredTiles!.length) {
+      if (widget.isGrid && _dragging == null && index < widget.staggeredTiles!.length) {
         final StaggeredTile tile = widget.staggeredTiles![index];
 
         final double usableCrossAxisExtent = constraints.biggest.width;
         final double cellExtent = usableCrossAxisExtent / widget.crossAxisCount;
 
-        mainAxisExtent = tile.mainAxisExtent ??
-            (tile.mainAxisCellCount! * cellExtent) +
-                (tile.mainAxisCellCount! - 1);
+        mainAxisExtent = tile.mainAxisExtent ?? (tile.mainAxisCellCount! * cellExtent) + (tile.mainAxisCellCount! - 1);
 
         crossAxisExtent = cellExtent * tile.crossAxisCellCount;
 
@@ -538,23 +507,19 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
               data: toWrap.key,
               ignoringFeedbackSemantics: false,
               feedback: widget.feedBackWidgetBuilder != null
-                  ? widget.feedBackWidgetBuilder!(
-                      context, index, toWrapWithSemantics)
+                  ? widget.feedBackWidgetBuilder!(context, index, toWrapWithSemantics)
                   : Container(
                       alignment: Alignment.topLeft,
                       // These constraints will limit the cross axis of the drawn widget.
                       constraints: newConstraints,
                       child: Material(
-                        elevation: 6.0,
+                        elevation: 0.0,
                         child: toWrapWithSemantics,
                       ),
                     ),
-              child: _dragging == toWrap.key
-                  ? const SizedBox()
-                  : toWrapWithSemantics,
+              child: _dragging == toWrap.key ? const SizedBox() : toWrapWithSemantics,
               childWhenDragging: const SizedBox(),
-              dragAnchor: DragAnchor.child,
-              onDragStarted: onDragStarted,
+              onDragStarted: onDragStarted, dragAnchorStrategy: childDragAnchorStrategy,
               // When the drag ends inside a DragTarget widget, the drag
               // succeeds, and we reorder the widget into position appropriately.
               onDragCompleted: onDragEnded,
@@ -571,23 +536,19 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
               data: toWrap.key,
               ignoringFeedbackSemantics: false,
               feedback: widget.feedBackWidgetBuilder != null
-                  ? widget.feedBackWidgetBuilder!(
-                      context, index, toWrapWithSemantics)
+                  ? widget.feedBackWidgetBuilder!(context, index, toWrapWithSemantics)
                   : Container(
                       alignment: Alignment.topLeft,
                       // These constraints will limit the cross axis of the drawn widget.
                       constraints: newConstraints,
                       child: Material(
-                        elevation: 6.0,
+                        elevation: 0.0,
                         child: toWrapWithSemantics,
                       ),
                     ),
-              child: _dragging == toWrap.key
-                  ? const SizedBox()
-                  : toWrapWithSemantics,
+              child: _dragging == toWrap.key ? const SizedBox() : toWrapWithSemantics,
               childWhenDragging: const SizedBox(),
-              dragAnchor: DragAnchor.child,
-              onDragStarted: onDragStarted,
+              onDragStarted: onDragStarted, dragAnchorStrategy: childDragAnchorStrategy,
               // When the drag ends inside a DragTarget widget, the drag
               // succeeds, and we reorder the widget into position appropriately.
               onDragCompleted: onDragEnded,
@@ -674,8 +635,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
     // We use the layout builder to constrain the cross-axis size of dragging child widgets.
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       const Key endWidgetKey = Key('DraggableList - End Widget');
       Widget finalDropArea;
       switch (widget.scrollDirection) {
@@ -702,13 +662,10 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
         reverse: widget.reverse,
         child: _buildContainerForScrollDirection(
           children: <Widget>[
-            if (widget.reverse)
-              _wrap(finalDropArea, widget.children.length, constraints),
+            if (widget.reverse) _wrap(finalDropArea, widget.children.length, constraints),
             if (widget.header != null) widget.header!,
-            for (int i = 0; i < widget.children.length; i += 1)
-              _wrap(widget.children[i], i, constraints),
-            if (!widget.reverse)
-              _wrap(finalDropArea, widget.children.length, constraints),
+            for (int i = 0; i < widget.children.length; i += 1) _wrap(widget.children[i], i, constraints),
+            if (!widget.reverse) _wrap(finalDropArea, widget.children.length, constraints),
           ],
         ),
       );
@@ -717,7 +674,5 @@ class _ReorderableListContentState extends State<_ReorderableListContent>
 }
 
 class StaggeredTileExtended extends StaggeredTile {
-    StaggeredTileExtended.count(
-      int crossAxisCellCount, num mainAxisCellCount)
-      : super.count(crossAxisCellCount, mainAxisCellCount.toDouble());
+  StaggeredTileExtended.count(int crossAxisCellCount, num mainAxisCellCount) : super.count(crossAxisCellCount, mainAxisCellCount.toDouble());
 }
