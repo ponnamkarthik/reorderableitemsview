@@ -513,7 +513,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent> with T
                       // These constraints will limit the cross axis of the drawn widget.
                       constraints: newConstraints,
                       child: Material(
-                        elevation: 6.0,
+                        elevation: 0.0,
                         child: toWrapWithSemantics,
                       ),
                     ),
@@ -542,7 +542,7 @@ class _ReorderableListContentState extends State<_ReorderableListContent> with T
                       // These constraints will limit the cross axis of the drawn widget.
                       constraints: newConstraints,
                       child: Material(
-                        elevation: 6.0,
+                        elevation: 0.0,
                         child: toWrapWithSemantics,
                       ),
                     ),
